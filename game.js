@@ -3,6 +3,14 @@ var gamePattern = [];
 var userClickedPattern = [];
 var started = false;
 var level = 0;
+var score = 0;
+
+var bestScore = localStorage.getItem("bestScore");
+if (bestScore === null) {
+    bestScore = 0;
+    localStorage.setItem("bestScore", bestScore);
+}
+
 
 $(document).keypress(function(event) {
     if (!started) {
@@ -51,6 +59,16 @@ function checkAnswer(currentLevel) {
             setTimeout(function() {
                 nextSequence();
             }, 1000);
+
+            score++;
+            if (score > bestScore) {
+            bestScore = score;
+            localStorage.setItem("bestScore", bestScore);
+            }
+
+            $("#your-score").text("Your Score: " + score);
+            $("#best-score").text("Best Score: " + bestScore);
+        
         }
 
     } else {
@@ -99,7 +117,10 @@ function animatePress(currentColour) {
 }
 
 function startOver() {
+    score = 0;
     level = 0;
     gamePattern = [];
+    userClickedPattern = [];
     started = false;
+    $("#your-score").text("Your Score: 0");
 }
