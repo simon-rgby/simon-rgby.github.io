@@ -7,24 +7,42 @@ var userClickedPattern = [];
 var started = false;
 var level = 0;
 
-$(document).keypress(function() {
-  if (!started) {
-    $("#level-title").text("Level " + level);
-    nextSequence();
-    started = true;
-  }
+$(document).keypress(function(event) {
+    if (!started) {
+        $("#level-title").text("Level " + level);
+        nextSequence();
+        started = true;
+    } else {
+        // Check which key was pressed
+        var keyPressed = event.key.toLowerCase();
+        switch (keyPressed) {
+            case "r":
+                handleColorClick("red");
+                break;
+            case "b":
+                handleColorClick("blue");
+                break;
+            case "g":
+                handleColorClick("green");
+                break;
+            case "y":
+                handleColorClick("yellow");
+                break;
+        }
+    }
 });
 
 $(".btn").click(function() {
-
   var userChosenColour = $(this).attr("id");
-  userClickedPattern.push(userChosenColour);
-
-  playSound(userChosenColour);
-  animatePress(userChosenColour);
-
-  checkAnswer(userClickedPattern.length-1);
+  handleColorClick(userChosenColour);
 });
+
+function handleColorClick(color) {
+  userClickedPattern.push(color);
+  playSound(color);
+  animatePress(color);
+  checkAnswer(userClickedPattern.length - 1);
+}
 
 function checkAnswer(currentLevel) {
 
