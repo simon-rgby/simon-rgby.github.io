@@ -1,1 +1,1 @@
-### Access the [website](https://simon-rgby.github.io/)
+### Play the [game](https://simon-rgby.github.io/)
